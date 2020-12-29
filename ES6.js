@@ -214,6 +214,84 @@ console.log(filterlist);
 
 // Old Javascript
 
+function Person(name, age, haircolor){
+    this.name = name;
+    this.age = age;
+    this.haircolor = haircolor;
+}
+Person.prototype.myname = () => console.log("My name is " + this.name + " My age is " + this.age + " my hair color is " + this.haircolor)
+
+function Chris(job, hobby, name, age, haircolor){
+    this.job = job;
+    this.hobby = hobby;
+    Person.call(this, name, age, haircolor);
+
+}
+
+Chris.prototype = Object.create(Person.prototype);
+
+const person = new Chris('Dev', 'Dancing', 'Jackie', 22, 'red')
+console.log(person)
+
+person.myname();
 
 // ES6
 
+class ShoppingList{
+    constructor(items, num) {
+        this.items = items;
+        this.num = num;
+    }
+    sayList(){
+        console.log(this.items)
+    }
+}
+
+const myList = new ShoppingList(['Redbull, Milk, Bread, Candy'],4 )
+console.log(myList);
+myList.sayList();
+
+
+class product extends ShoppingList{
+    constructor(items, num, amount, cost) {
+        super(items,num);
+        this.amount = amount;
+        this.cost = cost;
+    }
+}
+
+const product1 = new product(['Redbull, Candy'],2,20, 3.45)
+console.log(product);
+
+/*
+* When inheriting a class within a class you must have have the 'extend'
+* keyword with the class name, along with the parameters and in the
+* constructor and add the keyword 'super' plus the parameters.
+* */
+
+// Old Javascript
+//promise
+function getData(data, callback){
+    setTimeout(()=>{
+        console.log('reading data from database');
+        callback({ data: data});
+    },1000 )
+}
+getData(5, (data) => {
+    console.log(data);
+});
+
+// ES6
+
+const prom = new Promise((resolve, reject) => {
+    // here we can is async
+    setTimeout(() => {
+        //resolve({user: 'Chris', pass: "osakaloop"});
+        reject (new Error("it aint working, chief"));
+    }, 2000);
+});
+
+prom.then(data => {
+    console.log(data);
+})
+.catch(err => console.log(err))
